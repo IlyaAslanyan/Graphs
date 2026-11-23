@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f3ed">
+  <title>Graph Lab — Learn algorithms by seeing them</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Graph Lab home">
+      <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+      <span>graph<span class="brand-light">lab</span></span>
+    </a>
+    <div class="topbar-note"><span class="live-dot"></span> A small studio for graph thinking</div>
+    <a class="top-link" href="https://en.wikipedia.org/wiki/Graph_theory" target="_blank" rel="noreferrer">Graph theory ↗</a>
+  </header>
+
+  <main class="page-shell">
+    <section class="intro">
+      <div class="eyebrow"><span>01</span> Explore, build, understand</div>
+      <h1>See how a graph<br><em>comes to life.</em></h1>
+      <p class="intro-copy">Build a network, choose an algorithm, and follow every decision. No black boxes — just clear steps.</p>
+      <div class="algorithm-chips" aria-label="Available algorithms">
+        <span class="chip chip-dfs">DFS</span><span class="chip chip-bfs">BFS</span>
+        <span class="chip chip-dijkstra">Dijkstra</span><span class="chip chip-cut">Cut vertices</span>
+      </div>
+    </section>
+
+    <section class="workspace" aria-label="Graph algorithm workspace">
+      <aside class="control-panel">
+        <div class="panel-heading"><div><span class="eyebrow small">WORKSPACE</span><h2>Set up a graph</h2></div><span class="step-badge">01 / 03</span></div>
+
+        <label class="field-label" for="example-select">Start with an example</label>
+        <select id="example-select" class="select-control"></select>
+        <div class="sample-description" id="sample-description"></div>
+
+        <div class="section-rule"><span>OR MAKE YOUR OWN</span></div>
+        <div class="edit-actions">
+          <button id="add-node" class="button button-secondary" type="button"><span>＋</span> Add node</button>
+          <button id="connect-mode" class="button button-secondary" type="button"><span>↗</span> Connect</button>
+          <button id="delete-node" class="button button-quiet" type="button">Delete selected node</button>
+        </div>
+        <p class="helper-text" id="edit-hint">Drag nodes to move them. Select a node to make it the start.</p>
+
+        <div class="option-row">
+          <label class="toggle-label"><input id="directed-toggle" type="checkbox"><span class="toggle"></span> Directed</label>
+          <label class="toggle-label"><input id="weighted-toggle" type="checkbox"><span class="toggle"></span> Weighted</label>
+        </div>
+
+        <div class="section-rule"><span>CHOOSE AN ALGORITHM</span></div>
+        <label class="field-label" for="algorithm-select">Algorithm</label>
+        <select id="algorithm-select" class="select-control">
+          <option value="dfs">Depth-first search (DFS)</option>
+          <option value="bfs">Breadth-first search (BFS)</option>
+          <option value="dijkstra">Dijkstra — shortest path</option>
+          <option value="articulation">Cut-vertex graph C(G)</option>
+        </select>
+        <div class="node-pickers" id="node-pickers">
+          <div><label class="field-label" for="start-select">Start node</label><select id="start-select" class="select-control"></select></div>
+          <div id="target-picker"><label class="field-label" for="target-select">Target node</label><select id="target-select" class="select-control"></select></div>
+        </div>
+        <div class="weight-control" id="weight-control"><label class="field-label" for="edge-weight">New edge weight</label><input id="edge-weight" type="number" min="0" max="999" value="4"></div>
+        <button id="run-button" class="button button-primary" type="button"><span>▶</span> Run algorithm</button>
+        <button id="exercise-button" class="button button-exercise" type="button"><span>◇</span> Check Exercise 3.4</button>
+        <p class="exercise-caption">C(G) contains only cut vertices. Two are connected when they share a block; this is different from the block graph B(G).</p>
+        <p class="exercise-caption">Exercise 3.4 checks the statement that a cut vertex of G is not a cut vertex of its complement.</p>
+      </aside>
+
+      <div class="visual-panel">
+        <div class="visual-toolbar">
+          <div><span class="eyebrow small">GRAPH CANVAS</span><h2 id="graph-title">My graph</h2><button id="view-toggle" class="complement-toggle" type="button" hidden>Show derived graph</button></div>
+          <div class="canvas-legend"><span><i class="legend-dot neutral"></i>Node</span><span><i class="legend-dot active"></i>Current</span><span><i class="legend-dot visited"></i>Visited</span></div>
+        </div>
+        <div class="canvas-wrap">
+          <svg id="graph-canvas" viewBox="0 0 960 560" role="img" aria-label="Interactive graph canvas">
+            <defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z"></path></marker></defs>
+            <g id="edge-layer"></g><g id="node-layer"></g>
+          </svg>
+          <div class="canvas-hint" id="canvas-hint">Drag a node to arrange your graph</div>
+        </div>
+        <div class="playback-row">
+          <button id="reset-button" class="icon-button" type="button" aria-label="Reset algorithm" title="Reset">↺</button>
+          <button id="back-button" class="icon-button" type="button" aria-label="Previous step" title="Previous step">←</button>
+          <button id="play-button" class="play-button" type="button"><span id="play-icon">▶</span> <span id="play-label">Play</span></button>
+          <button id="next-button" class="icon-button" type="button" aria-label="Next step" title="Next step">→</button>
+          <div class="progress-track"><div id="progress-fill"></div></div>
+          <span class="step-count" id="step-count">Ready</span>
+        </div>
+        <div class="result-strip" id="result-strip"><span class="result-icon">✳</span><span id="result-text">Choose an example or create a graph, then run an algorithm.</span></div>
+        <div class="trace-details" id="trace-details" hidden></div>
+      </div>
+    </section>
+
+    <section class="learning-grid">
+      <article class="learning-card"><span class="card-number">01</span><div><h3>Make a network</h3><p>Nodes are things. Edges show how they connect. Drag to organize, then try a new shape.</p></div><span class="card-symbol">⌘</span></article>
+      <article class="learning-card"><span class="card-number">02</span><div><h3>Follow the process</h3><p>Step through the queue, stack, or distance updates. Pause whenever a detail catches your eye.</p></div><span class="card-symbol">↗</span></article>
+      <article class="learning-card"><span class="card-number">03</span><div><h3>Connect the ideas</h3><p>Build C(G) from cut vertices and shared blocks, then compare a graph with its complement.</p></div><span class="card-symbol">◌</span></article>
+    </section>
+    <footer><span>GRAPH LAB</span><span>Built for curious minds · C++ algorithms, visible steps</span></footer>
+  </main>
+  <script src="/examples.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>
