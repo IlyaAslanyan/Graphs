@@ -1,0 +1,12 @@
+build/
+.idea/
+.vscode/
+*.exe
+graph_server
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
